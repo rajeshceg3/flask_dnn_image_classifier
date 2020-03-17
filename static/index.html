@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification app</title>
+</head>
+<body>    
+    <input id="img-select" type="file">    
+    <button id="pred-btn">Predict</button>
+    <p>Predictions</p>    
+    <p>Dog: <span id="dog-class"></span></p>
+    <p>Cat: <span id="cat-class"></span></p>
+    <img id="selected-img" src=""/>
+       
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        let TestImage;
+        $("#img-select").change(()=> {
+            let filerdr = new FileReader();
+            filerdr.onload = (e)=> {
+                let dataURL = filerdr.result;
+                $('#selected-img').attr("src", dataURL);
+                TestImage = dataURL.replace("data:image/png;base64,","");
+                console.log(TestImage);
+            }
+            filerdr.readAsDataURL($("#img-select")[0].files[0]);
+            $("#dog-class").text("");
+            $("#cat-class").text("");
+        });
+        
+        $("#pred-btn").click(()=>{
+            let message = {
+                image: TestImage
+            }
+            console.log(message);
+            $.post("http://localhost:5000/predict", JSON.stringify(message), (response)=>{
+                $("#dog-class").text(response.prediction.dog.toFixed(6));
+                $("#cat-class").text(response.prediction.cat.toFixed(6));
+                console.log(response);
+            });
+        });       
+    </script>
+</body>
+</html>
