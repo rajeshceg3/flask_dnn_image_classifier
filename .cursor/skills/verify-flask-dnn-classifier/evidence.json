@@ -1,0 +1,1 @@
+{"runner":"verify.py","result":"FAILURES=0","checks":["predict-syntax","predict-route","model-load-at-import","page-has-form","response-key-contract"],"boundaries":["model file VGG16_cats_and_dogs.h5 absent - no boot/predict possible","keras.preprocessing removed in Keras 3, needs 2.x pins","no / route, no CORS, hardcoded localhost:5000 in page"]}
